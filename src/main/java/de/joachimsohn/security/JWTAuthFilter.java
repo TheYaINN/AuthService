@@ -1,7 +1,7 @@
 package de.joachimsohn.security;
 
 import de.joachimsohn.services.JWTService;
-import de.joachimsohn.services.user.CustomUserDetailService;
+import de.joachimsohn.services.user.CustomUserDetailServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,7 +21,7 @@ import java.io.IOException;
 public final class JWTAuthFilter extends OncePerRequestFilter {
 
     private final JWTService jwtService;
-    private final CustomUserDetailService users;
+    private final CustomUserDetailServiceImpl users;
 
     @Override
     protected void doFilterInternal(final @NotNull HttpServletRequest request, final @NotNull HttpServletResponse response, final @NotNull FilterChain filterChain) throws ServletException, IOException {
@@ -35,7 +35,6 @@ public final class JWTAuthFilter extends OncePerRequestFilter {
             token = null;
         }
 
-        // TODO: it should not access DB to eliminate slowdown and only verify token
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             final var userDetails = users.loadUserByUsername(username);
             if (jwtService.validateToken(token, userDetails)) {

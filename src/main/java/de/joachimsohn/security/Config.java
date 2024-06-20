@@ -1,6 +1,6 @@
 package de.joachimsohn.security;
 
-import de.joachimsohn.services.user.CustomUserDetailService;
+import de.joachimsohn.services.user.CustomUserDetailServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -34,7 +34,7 @@ public class Config {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return new CustomUserDetailService();
+        return new CustomUserDetailServiceImpl();
     }
 
     @Bean
