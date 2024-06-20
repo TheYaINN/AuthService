@@ -35,6 +35,7 @@ public final class JWTAuthFilter extends OncePerRequestFilter {
             token = null;
         }
 
+        // TODO: it should not access DB to eliminate slowdown and only verify token
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             final var userDetails = users.loadUserByUsername(username);
             if (jwtService.validateToken(token, userDetails)) {
